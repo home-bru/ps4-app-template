@@ -28,20 +28,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y clang lld
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          git clone --depth 1 https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain
-          mv ./OpenOrbis-PS4-Toolchain $OO_PS4_TOOLCHAIN
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          ls -l $OO_PS4_TOOLCHAIN
-          make
+      - name: Run Open Orbis Toolchain
+        uses: OpenOrbis/toolchain-action@main
+        with:
+          version: v0.5.1
+          command: make; PkgTool.Core pkg_build pkg/pkg.gp4 .
